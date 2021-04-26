@@ -83,7 +83,7 @@ def get_user_data(username, auth_token):
 	
 	r = r.json()
 	
-	if("Bad credentials" in r["message"]):
+	if "message" in r and "Bad credentials" in r["message"]:
 		print("\rYour token has been rejected. Are you sure you typed it in correctly? Is it still valid?")
 		sys.exit(2)
 	else:

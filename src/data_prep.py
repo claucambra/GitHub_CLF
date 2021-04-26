@@ -21,7 +21,7 @@ def data_prepper(users_dict):
 	user_data = []
 	
 	for user in users_dict:
-		contribCalendar = user["contributionsCollection"]["contributionCalendar"]
+		contribCalendar = users_dict[user]["contributionsCollection"]["contributionCalendar"]
 		
 		num_weeks = 0
 		num_days = 0
@@ -39,9 +39,9 @@ def data_prepper(users_dict):
 		
 		user_dict = {
 			"username": user,
-			"name": user["name"],
-			"bio": user["bio"],
-			"location": user["location"],
+			"name": users_dict[user]["name"],
+			"bio": users_dict[user]["bio"],
+			"location": users_dict[user]["location"],
 			"total_contributions": contribCalendar["totalContributions"],
 			"average_weekly_contributions": avg_weekly_contrib,
 			"average_daily_contributions": avg_daily_contrib,
