@@ -83,3 +83,13 @@ def get_user_data(username, auth_token):
 	
 	return r.json()["data"]["user"]
 
+def get_top_users_data(auth_token, in_min_followers = 2000):
+	top_users = get_top_users(auth_token, in_min_followers)
+	
+	all_users_data = {}
+	
+	for user in top_users:
+		data = get_user_data(user, auth_token)
+		all_users_data[user] = data
+	
+	return all_users_data

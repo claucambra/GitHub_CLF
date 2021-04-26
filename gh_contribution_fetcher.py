@@ -57,6 +57,6 @@ def config_check_get_token():
 			sys.exit("Stopping.")
 
 gh_token = config_check_get_token()
-print(get_top_users(gh_token))
+#print(get_top_users(gh_token))
 
 #print(get_user_data("torvalds", ghToken)["contributionsCollection"]["contributionCalendar"]["totalContributions"])

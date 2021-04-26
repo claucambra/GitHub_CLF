@@ -38,7 +38,7 @@ def data_prepper(users_dict):
 		avg_daily_contrib = contribCalendar["totalContributions"] / num_days
 		
 		user_dict = {
-			"username":
+			"username": user,
 			"name": user["name"],
 			"bio": user["bio"],
 			"location": user["location"],
