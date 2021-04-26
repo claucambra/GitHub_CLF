@@ -34,7 +34,7 @@ def get_top_users(auth_token = None, in_min_followers = 2000):
 		r = requests.get(url, headers = headers if auth_token != None else None)
 		results.append(r.json())
 	
-	if("Bad credentials" in results[0]["message"]):
+	if "message" in results and "Bad credentials" in results[0]["message"]:
 		print("\rYour token has been rejected. Are you sure you typed it in correctly? Is it still valid?")
 		sys.exit(2)
 	else:
