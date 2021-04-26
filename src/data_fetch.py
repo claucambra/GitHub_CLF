@@ -17,19 +17,22 @@ def get_top_users(auth_token = None, in_min_followers = 2000):
 		r = requests.get(url, headers = headers if auth_token != None else None)
 		results.append(r.json())
 	
-	
-	print("\rFetching complete. Collating results...")
-	
-	usernames = []
-	
-	for page in results:
-		if "items" in page:
-			for item in page["items"]:
-				usernames.append(item["login"])
-		else:
-			print("\rNo items found on this page...")
+	if("Bad credentials" in results[0]["message"]):
+		print("\rYour token has been rejected. Are you sure you typed it in correctly? Is it still valid?")
+		sys.exit(2)
+	else:
+		print("\rFetching complete. Collating results...")
 		
-	return usernames
+		usernames = []
+		
+		for page in results:
+			if "items" in page:
+				for item in page["items"]:
+					usernames.append(item["login"])
+			else:
+				print("\rNo items found on this page...")
+			
+		return usernames
 
 def get_user_data(username, auth_token):
 	headers = {"Authorization": f"bearer {auth_token}"}
