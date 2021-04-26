@@ -16,11 +16,19 @@
 # along with this program; if not, see <http://www.gnu.org/licenses/>.
 
 import csv
+import os
 
 def data_prepper(users_dict):
 	user_data = []
 	
+	num_users = users_dict.keys().len()
+	current_user_num = 0
+	
 	for user in users_dict:
+		current_user_num += 1
+		sys.stdout.write(f"\rPreparing data of user... {str(current_user_num)}/{str(num_users)}")
+		sys.stdout.flush()
+		
 		contribCalendar = users_dict[user]["contributionsCollection"]["contributionCalendar"]
 		
 		num_weeks = 0
@@ -50,4 +58,24 @@ def data_prepper(users_dict):
 		
 		user_data.append(user_dict)
 	
+	print("\rUser data prepped.")
+	
 	return user_data
+
+def csv_creator(prepped_data):
+	if not os.path.isdir("output"):
+		os.mkdir("output")
+	
+	file_num = 1
+	
+	while os.path.isfile(f"output/output{file_num}.csv"):
+		file_num += 1
+	
+	with open("output/output{file_num}.csv", "w") as csvfile:
+		table_headers = prepped_data[0].keys()
+		
+		datawriter = csv.writer(csvfile, delimiter=",", fieldnames=table_headers)
+		datawriter.writeheader()
+		
+		for user in prepped_data:
+			writer.writerow(user)

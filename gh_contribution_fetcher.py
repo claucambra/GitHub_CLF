@@ -58,7 +58,7 @@ def config_check_get_token():
 			sys.exit("Stopping.")
 
 gh_token = config_check_get_token()
-#print(get_top_users(gh_token))
-print(data_prepper({"elChupaCambra": get_user_data("elChupaCambra", gh_token)}))
+data = get_top_users_data(gh_token)
+prepped_data = data_prepper(data)
+csv_creator(prepped_data)
 
-#print(get_user_data("elChupaCambra", gh_token))
