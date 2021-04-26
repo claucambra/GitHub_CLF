@@ -82,6 +82,26 @@ def ask_about_database():
 
 print("\nMake sure you have write access to your current folder!\n")
 gh_token = config_check_get_token()
-data = get_top_users_data(gh_token)
-prepped_data = data_prepper(data)
-csv_creator(prepped_data)
+
+print("""
+	0. Cancel and exit
+	1. Fetch a specific user's data
+	2. Fetch top 1000 GitHub users' data
+	
+	Please enter the number of your selection.
+	""")
+selection = input()
+
+if not selection or selection == "0":
+	sys.exit()
+else:
+	selection = int(selection)
+	data = {}
+	if selection == 1:
+		username = input("Enter GitHub username: ")
+		data[username] = get_user_data(username, gh_token)
+	elif selection == 2:
+		data = get_top_users_data(gh_token)
+	
+	prepped_data = data_prepper(data)
+	csv_creator(prepped_data)

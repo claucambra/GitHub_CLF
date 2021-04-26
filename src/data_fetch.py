@@ -99,3 +99,4 @@ def get_top_users_data(auth_token, in_min_followers = 2000):
 		all_users_data[user] = data
 	
 	return all_users_data
+
