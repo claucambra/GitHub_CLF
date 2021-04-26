@@ -36,7 +36,15 @@ def run_setup():
 		os.mkdir("config")
 	with open (config_path, 'w') as config_file:
 		config.write(config_file)
+	print(f"Token saved in {config_path}")
 	return input_token
+
+def temp_key_set():
+	input_token = input("Please type in your GitHub developer token.\n")
+	if not input_token:
+		sys.exit("Stopping.")
+	else:
+		return input_token
 
 def config_check_get_token():
 	if os.path.isfile(config_path) and config.read(config_path) and config["Config"]["Token"]:
@@ -48,17 +56,32 @@ def config_check_get_token():
 			if confirm == 'y' or confirm == "Y" or not confirm:
 				return run_setup()
 			else:
-				sys.exit("Stopping.")
+				confirm = input("Use a temporary GitHub developer token? (Will not be stored) [Y/n] ")
+				if confirm == 'y' or confirm == "Y" or not confirm:
+					return temp_key_set()
+				else:
+					sys.exit("Stopping.")
 	else:
 		print("No configuration file found.")
 		confirm = input("This application requires a GitHub developer token to work. Set? [Y/n] ")
 		if confirm == 'y' or confirm == "Y" or not confirm:
 			return run_setup()
 		else:
-			sys.exit("Stopping.")
+			confirm = input("Use a temporary GitHub developer token? (Will not be stored) [Y/n] ")
+			if confirm == 'y' or confirm == "Y" or not confirm:
+				return temp_key_set()
+			else:
+				sys.exit("Stopping.")
 
+def ask_about_database():
+	confirm = input("Upload to database? [Y/n]")
+	if confirm == 'y' or confirm == "Y" or not confirm:
+		return true
+	else:
+		return false
+
+print("\nMake sure you have write access to your current folder!\n")
 gh_token = config_check_get_token()
 data = get_top_users_data(gh_token)
 prepped_data = data_prepper(data)
 csv_creator(prepped_data)
-
