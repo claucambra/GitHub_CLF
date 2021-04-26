@@ -71,11 +71,20 @@ def csv_creator(prepped_data):
 	while os.path.isfile(f"output/output{file_num}.csv"):
 		file_num += 1
 	
-	with open("output/output{file_num}.csv", "w") as csvfile:
+	num_users = prepped_data.len()
+	current_user_num = 0
+	
+	with open(f"output/output{file_num}.csv", "w") as csvfile:
 		table_headers = prepped_data[0].keys()
 		
 		datawriter = csv.writer(csvfile, delimiter=",", fieldnames=table_headers)
 		datawriter.writeheader()
 		
 		for user in prepped_data:
+			current_user_num += 1
+			sys.stdout.write(f"\rWriting user data to file... {str(current_user_num)}/{str(num_users)}")
+			sys.stdout.flush()
+			
 			writer.writerow(user)
+	
+	print(f"\rUser data written! Check inside this folder for output/output{file_num}.csv")
