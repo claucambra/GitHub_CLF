@@ -81,7 +81,13 @@ def get_user_data(username, auth_token):
 	print(f"Getting {username}'s data...")
 	r = requests.post("https://api.github.com/graphql", data = json.dumps(query), headers = headers)
 	
-	return r.json()["data"]["user"]
+	r = r.json()
+	
+	if("Bad credentials" in r["message"]):
+		print("\rYour token has been rejected. Are you sure you typed it in correctly? Is it still valid?")
+		sys.exit(2)
+	else:
+		return r["data"]["user"]
 
 def get_top_users_data(auth_token, in_min_followers = 2000):
 	top_users = get_top_users(auth_token, in_min_followers)

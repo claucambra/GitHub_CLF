@@ -21,6 +21,7 @@ import getopt
 import configparser
 
 from src.data_fetch import * 
+from src.data_prep import *
 
 gh_token = ""
 config = configparser.ConfigParser()
@@ -58,5 +59,6 @@ def config_check_get_token():
 
 gh_token = config_check_get_token()
 #print(get_top_users(gh_token))
+#print(data_prepper({"elChupaCambra": get_user_data("elChupaCambra", gh_token)}))
 
-#print(get_user_data("torvalds", ghToken)["contributionsCollection"]["contributionCalendar"]["totalContributions"])
+print(get_user_data("elChupaCambra", gh_token))
