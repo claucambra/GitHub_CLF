@@ -17,7 +17,6 @@
 
 import os
 import sys
-import getopt
 import configparser
 
 from src.data_fetch import * 
