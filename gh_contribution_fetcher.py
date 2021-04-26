@@ -1,5 +1,6 @@
 import os
 import sys
+import getopt
 import configparser
 
 from src.data_fetch import * 
@@ -17,24 +18,28 @@ def run_setup():
 		os.mkdir("config")
 	with open (config_path, 'w') as config_file:
 		config.write(config_file)
+	return input_token
 
-if os.path.isfile(config_path) and config["Config"]["Token"]:
-	confirm = input("Use stored GitHub developer token? [Y/n] ")
-	if confirm == 'y' or confirm == "Y" or not confirm:
-		config.read(config_path)
-		gh_token = config["Config"]["Token"]
-	else:
-		confirm = input("Set a new GitHub developer token? [Y/n] ")
+def config_check_get_token():
+	if os.path.isfile(config_path) and config.read(config_path) and config["Config"]["Token"]:
+		confirm = input("Use stored GitHub developer token? [Y/n] ")
 		if confirm == 'y' or confirm == "Y" or not confirm:
-			run_setup()
+			return config["Config"]["Token"]
+		else:
+			confirm = input("Set a new GitHub developer token? [Y/n] ")
+			if confirm == 'y' or confirm == "Y" or not confirm:
+				return run_setup()
+			else:
+				sys.exit("Stopping.")
+	else:
+		print("No configuration file found.")
+		confirm = input("This application requires a GitHub developer token to work. Set? [Y/n] ")
+		if confirm == 'y' or confirm == "Y" or not confirm:
+			return run_setup()
 		else:
 			sys.exit("Stopping.")
-else:
-	confirm = input("This application requires a GitHub developer token to work. Set? [Y/n] ")
-	if confirm == 'y' or confirm == "Y" or not confirm:
-		run_setup()
-	else:
-		sys.exit("Stopping.")
 
-#print(get_users())
+gh_token = config_check_get_token()
+print(get_top_users(gh_token))
+
 #print(get_user_data("torvalds", ghToken)["contributionsCollection"]["contributionCalendar"]["totalContributions"])
