@@ -4,6 +4,7 @@ import getopt
 import configparser
 
 from src.data_fetch import * 
+from src.database_tools import *
 
 gh_token = ""
 config = configparser.ConfigParser()
