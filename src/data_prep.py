@@ -17,11 +17,12 @@
 
 import csv
 import os
+import sys
 
 def data_prepper(users_dict):
 	user_data = []
 	
-	num_users = users_dict.keys().len()
+	num_users = len(users_dict.keys())
 	current_user_num = 0
 	
 	for user in users_dict:
@@ -71,13 +72,13 @@ def csv_creator(prepped_data):
 	while os.path.isfile(f"output/output{file_num}.csv"):
 		file_num += 1
 	
-	num_users = prepped_data.len()
+	num_users = len(prepped_data)
 	current_user_num = 0
 	
 	with open(f"output/output{file_num}.csv", "w") as csvfile:
 		table_headers = prepped_data[0].keys()
 		
-		datawriter = csv.writer(csvfile, delimiter=",", fieldnames=table_headers)
+		datawriter = csv.DictWriter(csvfile, delimiter=",", fieldnames=table_headers)
 		datawriter.writeheader()
 		
 		for user in prepped_data:
@@ -85,6 +86,6 @@ def csv_creator(prepped_data):
 			sys.stdout.write(f"\rWriting user data to file... {str(current_user_num)}/{str(num_users)}")
 			sys.stdout.flush()
 			
-			writer.writerow(user)
+			datawriter.writerow(user)
 	
 	print(f"\rUser data written! Check inside this folder for output/output{file_num}.csv")
