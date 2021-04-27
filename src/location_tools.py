@@ -72,8 +72,11 @@ def add_detailed_location_to_output(geonames_username, csv_filename):
 					location_query = row["location"]
 					location_query = re.sub(r"Earth", "", location_query, flags = re.I)
 					location_query = re.sub(r"(USA|U\.S\.A\.|US|U\.S\.|United States)", "United States of America", location_query)
+					location_query = re.sub(r"SF", "San Francisco", location_query)
 					location_query = re.sub(r"(UK|U\.K\.)", "United Kingdom", location_query, flags = re.I)
-					location_query = re.sub(r"\s+,\s+$", "", location_query, flags = re.I)
+					location_query = re.sub(r"(PRC|P\.R\.C\.)", "China", location_query)
+					location_query = re.sub(r"\s+,\s+$", "", location_query, flags)
+					location_query = re.sub(r"@", " , ", location_query, flags)
 					location_query = re.sub(r"/.+", "", location_query)
 					print(location_query)
 
@@ -86,6 +89,8 @@ def add_detailed_location_to_output(geonames_username, csv_filename):
 						if "continent" not in location_name_type and "region" not in location_name_type:
 							admin_division_1_name = location_data["adminName1"]
 							country_name = location_data["countryName"]
+						if "region" in location_name_type and "California" in location_name:
+							country_name = "United States of America"
 				
 				user_dict = {
 					"username": row["username"],
