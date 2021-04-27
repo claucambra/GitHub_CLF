@@ -21,6 +21,7 @@ import configparser
 
 from src.data_fetch import * 
 from src.data_prep import *
+from src.location_tools import *
 
 gh_token = ""
 config = configparser.ConfigParser()
@@ -87,6 +88,7 @@ while True:
 	0. Cancel and exit
 	1. Fetch a specific user's data
 	2. Fetch top 1000 GitHub users' data
+	3. Add detailed location data to existing CSV file
 	
 	Please enter the number of your selection.
 	""")
@@ -105,6 +107,29 @@ while True:
 		prepped_data = data_prepper(data)
 		csv_creator(prepped_data)
 	elif selection == 3:
-		pass
+		folder = "output/"
+		
+		if os.path.exists(folder):
+			print("\nPlease choose a file:")
+			
+			file_list = os.listdir(folder)
+			file_dict = {}
+			current_file_idx = 0
+			for file in file_list:
+				if "_detailed_location" not in file and os.path.isfile(folder + file):
+					file_dict[current_file_idx] = file
+					print(str(current_file_idx) + ":\t" + file)
+					current_file_idx += 1
+			
+			file_selection = int(input())
+			if file_selection in file_dict:
+				username = input("Please provide a verified GeoNames username (required for location data retrieval): ")
+				add_detailed_location_to_output(username, folder + file)
+			else:
+				pass
+		else:
+			print("No output folder found here.")
+		
+		
 	else:
 		break

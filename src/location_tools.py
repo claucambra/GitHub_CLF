@@ -75,8 +75,8 @@ def add_detailed_location_to_output(geonames_username, csv_filename):
 					location_query = re.sub(r"SF", "San Francisco", location_query)
 					location_query = re.sub(r"(UK|U\.K\.)", "United Kingdom", location_query, flags = re.I)
 					location_query = re.sub(r"(PRC|P\.R\.C\.)", "China", location_query)
-					location_query = re.sub(r"\s+,\s+$", "", location_query, flags)
-					location_query = re.sub(r"@", " , ", location_query, flags)
+					location_query = re.sub(r"\s+,\s+$", "", location_query)
+					location_query = re.sub(r"@", " , ", location_query)
 					location_query = re.sub(r"/.+", "", location_query)
 					print(location_query)
 
