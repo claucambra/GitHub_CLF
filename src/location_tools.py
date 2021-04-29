@@ -89,7 +89,7 @@ def add_detailed_location_to_output(geonames_username, csv_filename):
 						if "continent" not in location_name_type and "region" not in location_name_type:
 							admin_division_1_name = location_data["adminName1"]
 							country_name = location_data["countryName"]
-						if "region" in location_name_type and "California" in location_name:
+						if ("region" in location_name_type and "California" in location_name) or ("countryName" in location_data and location_data["countryName"] == "United States"):
 							country_name = "United States of America"
 				
 				user_dict = {
