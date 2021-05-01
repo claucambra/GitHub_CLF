@@ -89,3 +89,4 @@ def csv_creator(prepped_data):
 			datawriter.writerow(user)
 	
 	print(f"\rUser data written! Check inside this folder for output/output{file_num}.csv")
+	return f"output{file_num}.csv"
