@@ -26,12 +26,12 @@ from src.location_tools import *
 
 parser = argparse.ArgumentParser(description="Easily and quickly fetch GitHub user contribution data.")
 
-parser.add_argument("--fetch_user", help="Get data on a specific user on GitHub.")
-parser.add_argument("--fetch_top_users", help="Get data on the top 100 most followed users on GitHub.", action="store_true")
-parser.add_argument("--get_location", help="Get detailed location data for this fetch (if available).")
+parser.add_argument("--fetch_user", help="Get data on a specific user on GitHub. (Provide a username!)")
+parser.add_argument("--fetch_top_users", help="Get data on the top 1000 most followed users on GitHub. (No need for additional arguments.)", action="store_true")
+parser.add_argument("--get_location", help="Get detailed location data for this fetch (if available). Provide a username for GeoNames.org (https://www.geonames.org/login)")
 # parser.add_argument("--add_location_tofile", help="Add detailed location data to an existing output (if available).")
-parser.add_argument("--store_gh_token", help="Store a GitHub dev token in the config (needed for access to APIs).")
-parser.add_argument("--temp_gh_token", help="Use a GitHub dev token for this fetch and don't store (needed for access to APIs).")
+parser.add_argument("--store_gh_token", help="Store a GitHub dev token in the config (needed for access to APIs). (https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token)")
+parser.add_argument("--temp_gh_token", help="Use a GitHub dev token for this fetch and don't store (needed for access to APIs). (https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token)")
 
 args = parser.parse_args()
 
