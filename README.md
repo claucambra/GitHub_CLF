@@ -16,6 +16,8 @@ A small python application that fetches a number of stats (within the past year)
 
 GHCF offers both a command-line-interface version (`ghcf-cli.py`) and a straight command version (`ghcf.py`).
 
+Both methods require the creation and providing of a [GitHub personal access token](https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token), required for access to GitHub's APIs. The same applies for the detailed location service required by [GeoNames](http://www.geonames.org/export/web-services.html), which requires the creation of a user account and the provision of a verified username.
+
 ### CLI version
 
 Simply run `ghcf-cli.py` with Python 3 and follow the on-screen instructions:
@@ -68,4 +70,4 @@ A 1000 user limit per request is imposed by the GitHub REST API, hence the 2000 
 
 It must also be kept in mind that both APIs have a rate limit of 5000 an hour. Keep this in mind as each time the top 1000 users' data is retrieved, this is counts towards the rate limit.
 
-The GeoNames API also has a limit of 20,000 requests a day
+The GeoNames API also has a limit of 20,000 requests a day.
