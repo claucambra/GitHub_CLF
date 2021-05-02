@@ -58,7 +58,7 @@ optional arguments:
 
 GitHub offers a  GraphQL API which you can use to extract (public) statistics about a given GitHub user. This API requires an authentication token, which you can acquire from the Developer Settings area of your GitHub account settings.
 
-GitHub also offers a REST API that you can use to find users. You can filter by certain metrics to get a list of users and some of their characteristics. 
+GitHub also offers a REST API that you can use to find users. You can filter by certain metrics to get a list of users and some of their characteristics.
 
 GHCF sorts users by numbers of followers and filters out users with less than 2000 users (by default). This provides slightly over 1000 users that we can then query the GraphQL API about to get some of these user's public details and simple contribution metrics.
 
@@ -71,3 +71,36 @@ A 1000 user limit per request is imposed by the GitHub REST API, hence the 2000 
 It must also be kept in mind that both APIs have a rate limit of 5000 an hour. Keep this in mind as each time the top 1000 users' data is retrieved, this is counts towards the rate limit.
 
 The GeoNames API also has a limit of 20,000 requests a day.
+
+## Importing into PostgreSQL
+
+Before copying our CSV data into our PostgreSQL database we need to create a table that will fit our data. We can do this with the following command:
+
+```
+CREATE TABLE IF NOT EXISTS gh_users_contributions (
+    username VARCHAR(39) NOT NULL,
+    name VARCHAR(100),
+    bio TEXT,
+    provided_location TEXT,
+    location_name VARCHAR(50),
+    location_name_type TEXT,
+    admin_division_1_name VARCHAR(50),
+    country_name VARCHAR(50),
+    lat FLOAT,
+    lng FLOAT,
+    total_contributions INT,
+    average_daily_contributions FLOAT,
+    average_weekly_contributions FLOAT,
+    daily_record INT,
+
+    PRIMARY KEY(username)
+);
+```
+
+After that, we can simply `cat` our CSV file outputted by GHCF and feed this through to `psql` in the terminal:
+
+```
+psql -d zcraamb -c "TRUNCATE TABLE gh_users_contributions"
+
+cat output1_detailed_location.csv | psql -d zcraamb -c "COPY gh_users_contributions(username, name, bio, provided_location, location_name, location_name_type, admin_division_1_name, country_name, lat, lng, total_contributions, average_daily_contributions, average_weekly_contributions, daily_record) FROM STDIN DELIMITER ',' CSV HEADER;"
+```
