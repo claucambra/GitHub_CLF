@@ -1,4 +1,4 @@
-# GitHub_Contribution_Fetcher
+# GitHub Contribution and Location Fetcher
 
 A small python application that fetches a number of stats (within the past year) about a GitHub user and cleanly outputs them to a CSV file.
 
